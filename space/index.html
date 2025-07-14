@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="ScreenOrientation" content="autoRotate:disabled" />
+    <title>N+</title>
+    <link rel="icon" type="image/png" href="assets/OS_logo.png" />
+    <link
+      rel="preload"
+      href="assets/suisse/SuisseIntl-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="assets/suisse/SuisseIntl-Black.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="assets/suisse/SuisseIntl-Medium.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      body {
+        transition: background-image 1s ease, filter 1s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="center-fixed">
+      <h1>operating system_studio</h1>
+      <a class="email" href="mailto:start@operating system.studio">start@operating system.studio</a>
+      <a class="ig-link" href="https://instagram.com/operatingsystem_studio" target="_blank" rel="noopener">@operatingsystem_studio</a>
+    </div>
+    <script>
+      const totalPhotos = 6;
+      let currentPhoto = 1;
+      let inverted = true;
+
+      function changeBackground() {
+        document.body.style.backgroundImage = `url('assets/3-2/${currentPhoto}.jpg')`;
+        document.body.style.filter = inverted ? 'invert(1) grayscale(1)' : 'none';
+        currentPhoto = (currentPhoto % totalPhotos) + 1;
+      }
+
+      setInterval(changeBackground, 4000);
+      document.body.addEventListener("click", function (e) {
+        if (e.target.tagName === "A") return;
+        inverted = !inverted;
+        changeBackground();
+      });
+
+      changeBackground(); // Initial call to set the first image
+    </script>
+  </body>
+</html>

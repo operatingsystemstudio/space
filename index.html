@@ -59,19 +59,44 @@
         height: 100%;
         width: 100%;
         font-family: "Suisse", sans-serif;
-        font-weight: 400;
-        background: url("assets/photos/1.jpg") no-repeat center center fixed;
+        font-weight: 800;
+        background: url("assets/3-2/2.jpg") no-repeat center center fixed;
         background-position: calc(50%) calc(60%);
         background-size: cover;
+        color: grey;
         background-color: black;
-        color: rgba(255, 255, 255, 0.8);
-        font-size: 12px;
+
+        font-size: 14px;
         line-height: 1.2;
         overflow: hidden;
       }
       ::selection {
-        background: white;
-        color: rgba(0, 0, 0, 0.5);
+        background: grey;
+        color: black;
+      }
+      .bg-transition {
+        filter: blur(0px) brightness(1) contrast(1);
+        opacity: 0;
+        transition: opacity 0.7s cubic-bezier(0.7, 0, 0.3, 1),
+          filter 2.5s cubic-bezier(0.7, 0, 0.3, 1);
+        pointer-events: none;
+        position: fixed;
+
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-position: center 60%;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+      .inverted-bg {
+        filter: invert(1) grayscale(1);
+        transition: filter 0.7s cubic-bezier(0.7, 0, 0.3, 1);
+      }
+      .normal-bg {
+        filter: none;
+        transition: filter 0.7s cubic-bezier(0.7, 0, 0.3, 1);
       }
       .center-fixed {
         position: fixed;
@@ -79,84 +104,146 @@
         left: 50%;
         transform: translate(-50%, -50%);
         text-align: center;
-        z-index: 10;
+
         user-select: text;
       }
-      .center-fixed h1 {
-        font-family: "Suisse", sans-serif;
-        font-weight: 800;
-        font-size: 2.2rem;
-        letter-spacing: 0.02em;
-        margin-bottom: 1.2rem;
-        color: rgba(255, 255, 255, 0.95);
-        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
-      }
-      .center-fixed .email {
-        display: block;
-        color: rgba(255, 255, 255, 0.85);
-        text-decoration: none;
-        text-transform: lowercase;
-        font-size: 1.1rem;
-        margin-bottom: 0.7rem;
-        transition: color 0.2s;
-      }
-      .center-fixed .email:hover {
-        color: #fff;
-        text-decoration: underline;
-      }
+
+      .center-fixed .email,
       .center-fixed .ig-link {
-        display: inline-block;
-        color: rgba(255, 255, 255, 0.8);
+        display: block;
         text-decoration: none;
-        font-size: 1.1rem;
-        background: rgba(0, 0, 0, 0.18);
-        border-radius: 6px;
-        padding: 0.2em 0.7em;
-        transition: background 0.2s, color 0.2s;
-      }
-      .center-fixed .ig-link:hover {
-        background: rgba(255, 255, 255, 0.12);
-        color: #fff;
-        text-decoration: underline;
-      }
-      .bottom {
-        bottom: 30px;
-        position: absolute;
-        width: 100%;
-        text-align: center;
+        font-weight: 400;
+
+        z-index: 10;
+        position: relative;
+        pointer-events: auto;
       }
       a {
-        color: rgba(255, 255, 255, 0.8);
-        text-decoration: none;
-        text-transform: uppercase;
         cursor: pointer !important;
+      }
+
+      .half a,
+      .half a:visited,
+      .half a:active,
+      .half a:focus {
+        color: white !important;
+        mix-blend-mode: difference;
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      .half {
+        position: fixed;
+        left: 0;
+        width: 100vw;
+        height: 50vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        pointer-events: none;
+      }
+      .top-half {
+        top: 0;
+      }
+      .bottom-half {
+        bottom: 0;
+      }
+      .half a {
+        pointer-events: auto;
       }
     </style>
   </head>
   <body>
-    <div class="center-fixed">
-      <h1>operating system_studio</h1>
-      <a class="email" href="mailto:start@operating system.studio"
-        >start@operating system.studio</a
-      >
+    <div class="half top-half">
       <a
-        class="ig-link"
         href="https://instagram.com/operatingsystem_studio"
         target="_blank"
         rel="noopener"
-        >@operatingsystem_studio</a
+        class="ig-link"
+        style="text-decoration: none"
+        >operating system_studio</a
       >
     </div>
+    <div class="half bottom-half">
+      <a
+        class="email"
+        href="mailto:start@operating system.studio"
+        style="text-decoration: none"
+        >start@operating system.studio</a
+      >
+    </div>
+    <div id="bg-transition" class="bg-transition"></div>
     <script>
-      // Cambia background al click, ciclando tra 1.jpg e 6.jpg
       const totalPhotos = 6;
-      let currentPhoto = 1;
-      document.body.addEventListener("click", function (e) {
-        // Non cambiare se si clicca su un link o mail
+      let currentPhoto = 2;
+      let inverted = true;
+      let intervalId;
+
+      const bgTransition = document.getElementById("bg-transition");
+
+      function setBackground(photo, instant = false) {
+        document.body.style.backgroundImage = `url('assets/3-2/${photo}.jpg')`;
+        document.body.classList.toggle("inverted-bg", inverted);
+        document.body.classList.toggle("normal-bg", !inverted);
+        if (instant) {
+          bgTransition.style.opacity = 0;
+          bgTransition.style.filter = "blur(0px) brightness(1.7) contrast(1.5)";
+        }
+      }
+
+      function transitionToNextPhoto() {
+        const nextPhoto = (currentPhoto % totalPhotos) + 1;
+        bgTransition.style.backgroundImage = `url('assets/3-2/${nextPhoto}.jpg')`;
+        bgTransition.style.opacity = 1;
+        bgTransition.style.filter = "blur(32px) brightness(2.2) contrast(2)";
+        setTimeout(() => {
+          setBackground(nextPhoto);
+          bgTransition.style.filter = "blur(0px) brightness(1.7) contrast(1.5)";
+          bgTransition.style.opacity = 0;
+          currentPhoto = nextPhoto;
+        }, 1700); // blur più lento
+      }
+
+      function startSlideshow() {
+        setBackground(currentPhoto, true);
+        intervalId = setInterval(() => {
+          if (inverted) transitionToNextPhoto();
+        }, 4000);
+      }
+
+      function setInverted(state) {
+        inverted = state;
+        setBackground(currentPhoto);
+        if (inverted) {
+          startSlideshow();
+        } else {
+          clearInterval(intervalId);
+        }
+      }
+
+      document.body.addEventListener("mousedown", function (e) {
         if (e.target.tagName === "A") return;
-        currentPhoto = (currentPhoto % totalPhotos) + 1;
-        document.body.style.backgroundImage = `url('assets/photos/${currentPhoto}.jpg')`;
+        setInverted(false);
       });
+      document.body.addEventListener("mouseup", function (e) {
+        if (e.target.tagName === "A") return;
+        setInverted(true);
+      });
+      document.body.addEventListener("mouseleave", function (e) {
+        if (!inverted) setInverted(true);
+      });
+      // Per mobile:
+      document.body.addEventListener("touchstart", function (e) {
+        if (e.target.tagName === "A") return;
+        setInverted(false);
+      });
+      document.body.addEventListener("touchend", function (e) {
+        if (e.target.tagName === "A") return;
+        setInverted(true);
+      });
+
+      startSlideshow();
     </script>
   </body>
 </html>
