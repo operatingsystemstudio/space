@@ -75,28 +75,15 @@
         color: black;
       }
       .bg-transition {
-        filter: blur(0px) brightness(1) contrast(1);
-        opacity: 0;
-        transition: opacity 0.7s cubic-bezier(0.7, 0, 0.3, 1),
-          filter 2.5s cubic-bezier(0.7, 0, 0.3, 1);
-        pointer-events: none;
-        position: fixed;
-
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-position: center 60%;
-        background-size: cover;
-        background-repeat: no-repeat;
+        display: none; /* Disabilita overlay effetti */
       }
       .inverted-bg {
         filter: invert(1) grayscale(1);
-        transition: filter 0.7s cubic-bezier(0.7, 0, 0.3, 1);
+        transition: none !important;
       }
       .normal-bg {
         filter: none;
-        transition: filter 0.7s cubic-bezier(0.7, 0, 0.3, 1);
+        transition: none !important;
       }
       .center-fixed {
         position: fixed;
@@ -151,6 +138,9 @@
       }
       .half a {
         pointer-events: auto;
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
       }
     </style>
   </head>
@@ -180,33 +170,20 @@
       let inverted = true;
       let intervalId;
 
-      const bgTransition = document.getElementById("bg-transition");
-
-      function setBackground(photo, instant = false) {
+      function setBackground(photo) {
         document.body.style.backgroundImage = `url('assets/3-2/${photo}.jpg')`;
         document.body.classList.toggle("inverted-bg", inverted);
         document.body.classList.toggle("normal-bg", !inverted);
-        if (instant) {
-          bgTransition.style.opacity = 0;
-          bgTransition.style.filter = "blur(0px) brightness(1.7) contrast(1.5)";
-        }
       }
 
       function transitionToNextPhoto() {
         const nextPhoto = (currentPhoto % totalPhotos) + 1;
-        bgTransition.style.backgroundImage = `url('assets/3-2/${nextPhoto}.jpg')`;
-        bgTransition.style.opacity = 1;
-        bgTransition.style.filter = "blur(32px) brightness(2.2) contrast(2)";
-        setTimeout(() => {
-          setBackground(nextPhoto);
-          bgTransition.style.filter = "blur(0px) brightness(1.7) contrast(1.5)";
-          bgTransition.style.opacity = 0;
-          currentPhoto = nextPhoto;
-        }, 1700); // blur più lento
+        setBackground(nextPhoto);
+        currentPhoto = nextPhoto;
       }
 
       function startSlideshow() {
-        setBackground(currentPhoto, true);
+        setBackground(currentPhoto);
         intervalId = setInterval(() => {
           if (inverted) transitionToNextPhoto();
         }, 4000);
@@ -230,7 +207,7 @@
         if (e.target.tagName === "A") return;
         setInverted(true);
       });
-      document.body.addEventListener("mouseleave", function (e) {
+      document.body.addEventListener("mouseleave", function () {
         if (!inverted) setInverted(true);
       });
       // Per mobile:
