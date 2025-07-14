@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="ScreenOrientation" content="autoRotate:disabled" />
+    <title>N+</title>
+    <link rel="icon" type="image/png" href="assets/OS_logo.png" />
+    <link
+      rel="preload"
+      href="assets/suisse/SuisseIntl-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="assets/suisse/SuisseIntl-Black.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="assets/suisse/SuisseIntl-Medium.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <style>
+      @font-face {
+        font-family: "Suisse";
+        src: url("assets/suisse/SuisseIntl-Regular.woff2") format("woff2");
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Suisse";
+        src: url("assets/suisse/SuisseIntl-Medium.woff2") format("woff2");
+        font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Suisse";
+        src: url("assets/suisse/SuisseIntl-Black.woff2") format("woff2");
+        font-weight: 800;
+        font-style: normal;
+        font-display: swap;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+        font-family: "Suisse", sans-serif;
+        font-weight: 400;
+        background: url("assets/photos/1.jpg") no-repeat center center fixed;
+        background-position: calc(50%) calc(60%);
+        background-size: cover;
+        background-color: black;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 12px;
+        line-height: 1.2;
+        overflow: hidden;
+      }
+      ::selection {
+        background: white;
+        color: rgba(0, 0, 0, 0.5);
+      }
+      .center-fixed {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        z-index: 10;
+        user-select: text;
+      }
+      .center-fixed h1 {
+        font-family: "Suisse", sans-serif;
+        font-weight: 800;
+        font-size: 2.2rem;
+        letter-spacing: 0.02em;
+        margin-bottom: 1.2rem;
+        color: rgba(255, 255, 255, 0.95);
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+      }
+      .center-fixed .email {
+        display: block;
+        color: rgba(255, 255, 255, 0.85);
+        text-decoration: none;
+        text-transform: lowercase;
+        font-size: 1.1rem;
+        margin-bottom: 0.7rem;
+        transition: color 0.2s;
+      }
+      .center-fixed .email:hover {
+        color: #fff;
+        text-decoration: underline;
+      }
+      .center-fixed .ig-link {
+        display: inline-block;
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        font-size: 1.1rem;
+        background: rgba(0, 0, 0, 0.18);
+        border-radius: 6px;
+        padding: 0.2em 0.7em;
+        transition: background 0.2s, color 0.2s;
+      }
+      .center-fixed .ig-link:hover {
+        background: rgba(255, 255, 255, 0.12);
+        color: #fff;
+        text-decoration: underline;
+      }
+      .bottom {
+        bottom: 30px;
+        position: absolute;
+        width: 100%;
+        text-align: center;
+      }
+      a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        text-transform: uppercase;
+        cursor: pointer !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="center-fixed">
+      <h1>operating system_studio</h1>
+      <a class="email" href="mailto:start@operating system.studio"
+        >start@operating system.studio</a
+      >
+      <a
+        class="ig-link"
+        href="https://instagram.com/operatingsystem_studio"
+        target="_blank"
+        rel="noopener"
+        >@operatingsystem_studio</a
+      >
+    </div>
+    <script>
+      // Cambia background al click, ciclando tra 1.jpg e 6.jpg
+      const totalPhotos = 6;
+      let currentPhoto = 1;
+      document.body.addEventListener("click", function (e) {
+        // Non cambiare se si clicca su un link o mail
+        if (e.target.tagName === "A") return;
+        currentPhoto = (currentPhoto % totalPhotos) + 1;
+        document.body.style.backgroundImage = `url('assets/photos/${currentPhoto}.jpg')`;
+      });
+    </script>
+  </body>
+</html>
