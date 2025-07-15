@@ -152,7 +152,7 @@
 
       @media (max-width: 900px) {
         body.mobile-photo2 {
-          background-position-x: calc(50% - 30px) !important;
+          background-position-x: calc(50% - 40px) !important;
         }
       }
     </style>
@@ -242,6 +242,10 @@
       document.body.addEventListener("contextmenu", function (e) {
         e.preventDefault();
       });
+
+      document.body.style.setProperty("--blur", "0px");
+      document.body.style.setProperty("--brightness", "1");
+      document.body.style.setProperty("--contrast", "1");
 
       startSlideshow();
     </script>
