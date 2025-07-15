@@ -142,6 +142,19 @@
         -webkit-user-select: none;
         -webkit-touch-callout: none;
       }
+      body,
+      .half a {
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      @media (max-width: 900px) {
+        body.mobile-photo2 {
+          background-position-x: calc(50% - 60px) !important;
+        }
+      }
     </style>
   </head>
   <body>
@@ -158,9 +171,9 @@
     <div class="half bottom-half">
       <a
         class="email"
-        href="mailto:start@operating system.studio"
+        href="mailto:start@operatingsystem.studio"
         style="text-decoration: none"
-        >start@operating system.studio</a
+        >start@operatingsystem.studio</a
       >
     </div>
     <div id="bg-transition" class="bg-transition"></div>
@@ -174,6 +187,13 @@
         document.body.style.backgroundImage = `url('assets/3-2/${photo}.jpg')`;
         document.body.classList.toggle("inverted-bg", inverted);
         document.body.classList.toggle("normal-bg", !inverted);
+
+        // Applica la classe solo se siamo su mobile e la foto è la 2
+        if (window.innerWidth <= 900 && photo === 2) {
+          document.body.classList.add("mobile-photo2");
+        } else {
+          document.body.classList.remove("mobile-photo2");
+        }
       }
 
       function transitionToNextPhoto() {
@@ -218,6 +238,9 @@
       document.body.addEventListener("touchend", function (e) {
         if (e.target.tagName === "A") return;
         setInverted(true);
+      });
+      document.body.addEventListener("contextmenu", function (e) {
+        e.preventDefault();
       });
 
       startSlideshow();
